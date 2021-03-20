@@ -10,11 +10,12 @@ conf = yaml.decode(raw_conf)
 
 
 local function hello(req)
+	print(req:request_line())
 	local req_st = http_client:request(req:method(), conf.proxy.bypass.host .. ':' .. conf.proxy.bypass.port)
 	return
 			{
 				status = req_st.status,
-				body = req_st.body
+				body = 'Hello world!'
 			}
 end
 --[[ 
@@ -30,7 +31,7 @@ end
 local router = require('http.router').new()
 router:route({ method = 'GET', path = '/'}, hello)
 
-local server = require('http.server').new('localhost', conf.proxy.bypass.port)
+local server = require('http.server').new('localhost', 8221)
 server:set_router(router)
 server:start()
 
