@@ -22,7 +22,7 @@ allocate_stack_mprot()
     return stack;
 }
 
-
+/*
 static void* allocate_stack_sig()
 {
     void *stack = malloc(stack_size);
@@ -32,7 +32,7 @@ static void* allocate_stack_sig()
     ss.ss_flags = 0;
     sigaltstack(&ss, NULL);
     return stack;
-}
+} */
 
 static ucontext_t uctx_main;
 
@@ -75,7 +75,6 @@ static void my_coroutine(ucontext_t *uctx_, int argc, int i, arr_int *int_arrays
 
 int main(int argc, char *argv[])
 {
-    clock_t start_t = 0;
     printf("argc = %d\n", argc);
     ucontext_t* uctx_ = (ucontext_t *) calloc(argc, sizeof(ucontext_t));
     size_t summary_size_arr = 0;
@@ -132,7 +131,7 @@ int main(int argc, char *argv[])
     size_t tmp = 0;
     for(int i = 1; i < argc; i++)
     {
-        for (int j = 0; j < int_arrays[i].size_arr; j++)
+        for (unsigned int j = 0; j < int_arrays[i].size_arr; j++)
         {
             summ_arr[j + tmp] = int_arrays[i].start_int[j];
         }
@@ -145,7 +144,7 @@ int main(int argc, char *argv[])
 
     FILE *f = fopen("result.txt", "w+");
 
-    for (int j = 0; j < summary_size_arr; j++)
+    for (unsigned int j = 0; j < summary_size_arr; j++)
     {
         if (f == NULL)
         {

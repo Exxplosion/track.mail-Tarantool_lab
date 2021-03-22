@@ -27,9 +27,9 @@ void qs(int *s_arr, int first, int last)
 
 void swap_cour(int i, ucontext_t *uctx_, int argc, arr_int *int_arrays)
 {
-    int_arrays[i].summ_sec += abs(int_arrays[i].last_sec - clock());
+    int_arrays[i].summ_sec += labs(int_arrays[i].last_sec - clock());
     int_arrays[i].last_sec = clock();
-    int_arrays[i % argc + 1].last_sec = clock();
+    //int_arrays[i % argc + 1].last_sec = clock();
     //printf("")
     printf("BY SWAP fucn%d: swapcontext(&uctx_[%d], &uctx_[%d])\n", i, i, i % argc + 1);
     if (swapcontext(&uctx_[i], &uctx_[i % argc + 1]) == -1)

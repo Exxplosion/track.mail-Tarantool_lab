@@ -128,7 +128,7 @@ int* formation_int(lines* words, size_t size_arr)
 {
 	int *int_array = (int *) calloc(size_arr, sizeof(int));
 
-	for (int i = 0; i < size_arr; i++)
+	for (unsigned int i = 0; i < size_arr; i++)
 	{
 		int_array[i] = atoi(words[i].lineptr);
 	}
