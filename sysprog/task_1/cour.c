@@ -32,7 +32,8 @@ static void* allocate_stack_sig()
     ss.ss_flags = 0;
     sigaltstack(&ss, NULL);
     return stack;
-} */
+}
+*/
 
 static ucontext_t uctx_main;
 
@@ -75,7 +76,11 @@ static void my_coroutine(ucontext_t *uctx_, int argc, int i, arr_int *int_arrays
 
 int main(int argc, char *argv[])
 {
-    printf("argc = %d\n", argc);
+    if (argc == 1)
+    {
+        printf("argc = %d, select file!!!\n", argc);
+        return 0;
+    }
     ucontext_t* uctx_ = (ucontext_t *) calloc(argc, sizeof(ucontext_t));
     size_t summary_size_arr = 0;
 
@@ -160,6 +165,15 @@ int main(int argc, char *argv[])
     {
         summ_t += int_arrays[i].summ_sec;
     }
+
+    for(int i = 1; i<argc; i++)
+    {
+        free(int_arrays[i].start_int);
+        free(uctx_[i].uc_stack.ss_sp);
+    }
+    free(int_arrays);
+    free(uctx_);
+    free(summ_arr);
 
     printf("main exiting\n");
     printf("programm working -  %ld MS, bye!\n", ((clock() + summ_t)*1000 /CLOCKS_PER_SEC) );
