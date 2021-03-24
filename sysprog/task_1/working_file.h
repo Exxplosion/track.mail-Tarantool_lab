@@ -7,6 +7,13 @@
 
 #define SIZE_INCREMENT 256
 
+#define handle_error(msg)   \
+	do                      \
+	{                       \
+		perror(msg);        \
+		exit(EXIT_FAILURE); \
+	} while (0)
+
 typedef struct
 {
 	char *lineptr; //указатель на начало

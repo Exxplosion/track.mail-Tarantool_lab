@@ -18,6 +18,8 @@ static void *
 allocate_stack_mprot()
 {
     void *stack = malloc(stack_size);
+    if (stack == NULL)
+        handle_error("malloc allocate_stack err");
     mprotect(stack, stack_size, PROT_READ | PROT_WRITE | PROT_EXEC);
     return stack;
 }
@@ -82,9 +84,13 @@ int main(int argc, char *argv[])
         return 0;
     }
     ucontext_t* uctx_ = (ucontext_t *) calloc(argc, sizeof(ucontext_t));
+    if (uctx_ == NULL)
+        handle_error("calloc_ucontext_err");
     size_t summary_size_arr = 0;
 
     arr_int* int_arrays = (arr_int *) calloc(argc, sizeof(arr_int));
+    if (int_arrays == NULL)
+        handle_error("calloc int_arr error");
     for (int i = 1; i < argc; i++)
     {
         printf("processing %d file \n", i);
@@ -148,6 +154,8 @@ int main(int argc, char *argv[])
     qs(summ_arr, 0, summary_size_arr - 1);
 
     FILE *f = fopen("result.txt", "w+");
+    if (f == NULL)
+        handle_error("fopen result.txt err");
 
     for (unsigned int j = 0; j < summary_size_arr; j++)
     {
